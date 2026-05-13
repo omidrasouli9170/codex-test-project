@@ -1,0 +1,32 @@
+name: Codex Fix Issue
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  codex:
+    if: github.event.label.name == 'codex-fix'
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Create branch
+        run: |
+          git checkout -b codex/issue-${{ github.event.issue.number }}
+
+      - name: Run Codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/prompts/fix-issue.md
+          sandbox: workspace-write
+          safety-strategy: drop-sudo
+          output-file: codex-output.md
+
