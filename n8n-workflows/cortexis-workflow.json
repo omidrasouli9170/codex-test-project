@@ -1,0 +1,299 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cortexis-upload",
+        "options": {}
+      },
+      "id": "e759abc0-e788-4e80-8568-5a3bd3137035",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -512,
+        160
+      ],
+      "webhookId": "18b5aee1-64bb-4465-8167-75c61a0f418e"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body[\"file_ng_open\"] }}",
+        "options": {}
+      },
+      "id": "58fbdd5b-1bd1-4081-a273-b995c9f61bde",
+      "name": "Download NG Open",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -288,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body[\"file_ng_closed\"] }}",
+        "options": {}
+      },
+      "id": "aefaf979-77be-4bd3-b480-d8561227dc9e",
+      "name": "Download NG Closed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        -64,
+        288
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body[\"file_edf_open\"] }}",
+        "options": {}
+      },
+      "id": "cec6fe49-6a25-4abb-ba17-3f5cdf2e67be",
+      "name": "Download EDF Open",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        160,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body[\"file_edf_closed\"] }}",
+        "options": {}
+      },
+      "id": "c3fc57eb-f63d-4689-94de-42742b60c4ba",
+      "name": "Download EDF Closed",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        384,
+        352
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "document",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-3.1-pro-preview",
+          "mode": "list",
+          "cachedResultName": "models/gemini-3.1-pro-preview"
+        },
+        "text": "تو یک تحلیل‌گر ارشد نوروساینس در کلینیک فوق‌تخصصی \"Cortexis\" هستی. مخاطب این گزارش، یک فرد غیرپزشک (مدیر/ورزشکار/مراجع عادی) است که می‌خواهد بداند وضعیت مغزش چگونه است و چطور می‌تواند عملکردش را هک و بهینه‌سازی کند.\n\n\n**قوانین اکید کورتکسیس برای نگارش گزارش:**\n1. به هیچ‌وجه اعداد خام، Z-score، نام لوب‌ها (فرونتال، پاریتال و...) و اصطلاحات سنگین پزشکی را در متن اصلی نیاور.\n2. لحن گزارش باید انگیزه‌بخش، حرفه‌ای و متمرکز بر «بهینه‌سازی عملکرد» باشد.\n3. فقط و فقط از قالب زیر برای خروجی استفاده کن:\n\n# گزارش تحلیل عملکرد مغزی کورتکسیس\n\n## ۱. نمای کلی عملکرد (Executive Summary)\n(در یک پاراگراف ساده و جذاب، وضعیت کلی مغز مراجع را توضیح بده. مثلاً اینکه مغز در حالت خستگی است، یا بیش‌فعال است، یا در حالت بهینه قرار دارد).\n\n## ۲. نقاط قوت شناختی (Cognitive Strengths)\n(بر اساس فایل‌ها، ۲ یا ۳ نقطه قوت مغز مراجع را پیدا کن. مثلاً قدرت تمرکز بالا، حافظه تصویری خوب، یا آرامش ذهنی).\n\n## ۳. نواحی نیازمند بهینه‌سازی (Areas for Optimization)\n(بر اساس دیس‌رگولاسیون‌ها، توضیح بده چه مشکلاتی در زندگی روزمره ممکن است داشته باشد. مثلاً حواس‌پرتی، خستگی ذهنی در میانه روز، یا کیفیت پایین خواب).\n\n## ۴. پروتکل پیشنهادی کورتکسیس (Actionable Protocol)\n(بر اساس مشکلات بند ۳، راهکارهای عملی بده. شامل:\n- توصیه‌های سبک زندگی و روتین خواب\n- توصیه‌های تغذیه‌ای یا مکمل‌های عمومی (بدون تجویز داروی شیمیایی)\n- تمرینات ذهنی یا نوروفیدبک\n\nگزارش را با یک پیام امیدوارکننده از طرف \"تیم کورتکسیس\" تمام کن.",
+        "inputType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        160,
+        544
+      ],
+      "id": "3b0416e7-83d9-40e3-968c-5b3b66057a0e",
+      "name": "Analyze document",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "8A5UW8hzqkx6cYC3",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1V_pJkaMdztJF7kY8HuMYM4Y5Si0z5ajV",
+          "mode": "list",
+          "cachedResultName": "CORTEXIS WEBSITE",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1V_pJkaMdztJF7kY8HuMYM4Y5Si0z5ajV"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        608,
+        160
+      ],
+      "id": "f1fefbf8-f24f-467e-a84b-637ee8e5ec63",
+      "name": "Upload file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ja5Ywungjio1TNrM",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "folderId": "1V_pJkaMdztJF7kY8HuMYM4Y5Si0z5ajV",
+        "title": "=گزارش کورتکسیس - {{ $node[\"Webhook\"].json.body[\"client_name\"] }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        384,
+        544
+      ],
+      "id": "eda6f58f-1072-444e-8219-3fcc66299ffb",
+      "name": "Create a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "qHYFgx42IJMCZBq5",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $node[\"Analyze document\"].json.content.parts[0].text }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        608,
+        544
+      ],
+      "id": "59b06122-9f82-4217-99f5-314f588b1e4d",
+      "name": "Update a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "qHYFgx42IJMCZBq5",
+          "name": "Google Docs account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Download NG Open",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download NG Open": {
+      "main": [
+        [
+          {
+            "node": "Download NG Closed",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download NG Closed": {
+      "main": [
+        [
+          {
+            "node": "Download EDF Open",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Analyze document",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download EDF Open": {
+      "main": [
+        [
+          {
+            "node": "Download EDF Closed",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download EDF Closed": {
+      "main": [
+        [
+          {
+            "node": "Upload file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze document": {
+      "main": [
+        [
+          {
+            "node": "Create a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a document": {
+      "main": [
+        [
+          {
+            "node": "Update a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "9f58a95f-e3ee-4e51-aafd-fd1b231b825c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c55a193812d3e5fdcd74a3496c62ca8529f942f5cfc5575f4feb64d90ac6bd6e"
+  },
+  "id": "BAS10AmUUpY5PEe2",
+  "tags": []
+}
